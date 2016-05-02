@@ -9,6 +9,7 @@
         ],
         "sourceMaps": "inline"
     },
+    "bugs": "https://github.com/ibi-group/isotropic-property-chainer/issues",
     "contributors": [
         "Duane Sibilly <duane.sibilly@ibigroup.com>"
     ],
@@ -47,10 +48,12 @@
         },
         "root": true
     },
+    "homepage": "https://github.com/ibi-group/isotropic-property-chainer",
     "license": "BSD-3-Clause",
     "main": "lib/property-chainer.js",
     "name": "isotropic-property-chainer",
     "private": true,
+    "repository": "ibi-group/isotropic-property-chainer",
     "scripts": {
         "build": "babel js -d lib",
         "lint": "eslint js test",
