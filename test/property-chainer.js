@@ -1,35 +1,27 @@
-import {
-    describe,
-    it
-} from 'mocha';
+import _chai from 'chai';
+import _make from 'isotropic-make';
+import _mocha from 'mocha';
+import _PropertyChainer from '../js/property-chainer.js';
 
-import {
-    expect
-} from 'chai';
+_mocha.describe('PropertyChainer', () => {
+    _mocha.it('should construct property chainer objects', () => {
+        _chai.expect(_PropertyChainer).to.be.a('function');
 
-import make from 'isotropic-make';
+        const propertyChainer = new _PropertyChainer();
 
-import PropertyChainer from '../js/property-chainer.js';
-
-describe('PropertyChainer', () => {
-    it('should construct property chainer objects', () => {
-        expect(PropertyChainer).to.be.a('function');
-
-        const propertyChainer = new PropertyChainer();
-
-        expect(propertyChainer).to.be.an.instanceOf(PropertyChainer);
+        _chai.expect(propertyChainer).to.be.an.instanceOf(_PropertyChainer);
     });
 
-    it('should be a property chainer object factory', () => {
-        expect(PropertyChainer).to.be.a('function');
+    _mocha.it('should be a property chainer object factory', () => {
+        _chai.expect(_PropertyChainer).to.be.a('function');
 
-        const propertyChainer = PropertyChainer();
+        const propertyChainer = _PropertyChainer();
 
-        expect(propertyChainer).to.be.an.instanceOf(PropertyChainer);
+        _chai.expect(propertyChainer).to.be.an.instanceOf(_PropertyChainer);
     });
 
-    it('should create prototype chains for instance property objects', () => {
-        const A = make(PropertyChainer, {
+    _mocha.it('should create prototype chains for instance property objects', () => {
+        const A = _make(_PropertyChainer, {
                 a: {
                     a: 'a'
                 },
@@ -40,7 +32,7 @@ describe('PropertyChainer', () => {
                     a: 'a'
                 },
                 _init (...args) {
-                    Reflect.apply(PropertyChainer.prototype._init, this, args);
+                    Reflect.apply(_PropertyChainer.prototype._init, this, args);
                     return this;
                 },
                 _propertyChains: [
@@ -49,7 +41,7 @@ describe('PropertyChainer', () => {
                     'c'
                 ]
             }),
-            B = make(A, {
+            B = _make(A, {
                 a: {
                     b: 'b'
                 },
@@ -64,7 +56,7 @@ describe('PropertyChainer', () => {
                     return this;
                 }
             }),
-            C = make(B, {
+            C = _make(B, {
                 a: {
                     c: 'c'
                 },
@@ -81,26 +73,26 @@ describe('PropertyChainer', () => {
             }),
             c = C();
 
-        expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
-        expect(Reflect.getPrototypeOf(c.b)).to.equal(B.prototype.b);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.b))).to.equal(A.prototype.b);
-        expect(Reflect.getPrototypeOf(c.c)).to.equal(B.prototype.c);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.c))).to.equal(A.prototype.c);
+        _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(c.b)).to.equal(B.prototype.b);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.b))).to.equal(A.prototype.b);
+        _chai.expect(Reflect.getPrototypeOf(c.c)).to.equal(B.prototype.c);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.c))).to.equal(A.prototype.c);
 
-        expect(c).to.have.deep.property('a.a', 'a');
-        expect(c).to.have.deep.property('a.b', 'b');
-        expect(c).to.have.deep.property('a.c', 'c');
-        expect(c).to.have.deep.property('b.a', 'a');
-        expect(c).to.have.deep.property('b.b', 'b');
-        expect(c).to.have.deep.property('b.c', 'c');
-        expect(c).to.have.deep.property('c.a', 'a');
-        expect(c).to.have.deep.property('c.b', 'b');
-        expect(c).to.have.deep.property('c.c', 'c');
+        _chai.expect(c.a).to.have.property('a', 'a');
+        _chai.expect(c.a).to.have.property('b', 'b');
+        _chai.expect(c.a).to.have.property('c', 'c');
+        _chai.expect(c.b).to.have.property('a', 'a');
+        _chai.expect(c.b).to.have.property('b', 'b');
+        _chai.expect(c.b).to.have.property('c', 'c');
+        _chai.expect(c.c).to.have.property('a', 'a');
+        _chai.expect(c.c).to.have.property('b', 'b');
+        _chai.expect(c.c).to.have.property('c', 'c');
     });
 
-    it('should create prototype chains for instance property objects with a custom property chains property name', () => {
-        const A = make(PropertyChainer, {
+    _mocha.it('should create prototype chains for instance property objects with a custom property chains property name', () => {
+        const A = _make(_PropertyChainer, {
                 a: {
                     a: 'a'
                 },
@@ -116,13 +108,13 @@ describe('PropertyChainer', () => {
                     'c'
                 ],
                 _init () {
-                    Reflect.apply(PropertyChainer.prototype._init, this, [{
+                    Reflect.apply(_PropertyChainer.prototype._init, this, [{
                         propertyChainsPropertyName: 'somethingElse'
                     }]);
                     return this;
                 }
             }),
-            B = make(A, {
+            B = _make(A, {
                 a: {
                     b: 'b'
                 },
@@ -137,7 +129,7 @@ describe('PropertyChainer', () => {
                     return this;
                 }
             }),
-            C = make(B, {
+            C = _make(B, {
                 a: {
                     c: 'c'
                 },
@@ -154,27 +146,27 @@ describe('PropertyChainer', () => {
             }),
             c = C();
 
-        expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
-        expect(Reflect.getPrototypeOf(c.b)).to.equal(B.prototype.b);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.b))).to.equal(A.prototype.b);
-        expect(Reflect.getPrototypeOf(c.c)).to.equal(B.prototype.c);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.c))).to.equal(A.prototype.c);
+        _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(c.b)).to.equal(B.prototype.b);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.b))).to.equal(A.prototype.b);
+        _chai.expect(Reflect.getPrototypeOf(c.c)).to.equal(B.prototype.c);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.c))).to.equal(A.prototype.c);
 
-        expect(c).to.have.deep.property('a.a', 'a');
-        expect(c).to.have.deep.property('a.b', 'b');
-        expect(c).to.have.deep.property('a.c', 'c');
-        expect(c).to.have.deep.property('b.a', 'a');
-        expect(c).to.have.deep.property('b.b', 'b');
-        expect(c).to.have.deep.property('b.c', 'c');
-        expect(c).to.have.deep.property('c.a', 'a');
-        expect(c).to.have.deep.property('c.b', 'b');
-        expect(c).to.have.deep.property('c.c', 'c');
+        _chai.expect(c.a).to.have.property('a', 'a');
+        _chai.expect(c.a).to.have.property('b', 'b');
+        _chai.expect(c.a).to.have.property('c', 'c');
+        _chai.expect(c.b).to.have.property('a', 'a');
+        _chai.expect(c.b).to.have.property('b', 'b');
+        _chai.expect(c.b).to.have.property('c', 'c');
+        _chai.expect(c.c).to.have.property('a', 'a');
+        _chai.expect(c.c).to.have.property('b', 'b');
+        _chai.expect(c.c).to.have.property('c', 'c');
     });
 
-    it('should create prototype chains including mixins for instance property objects', () => {
-        const A = make([
-                PropertyChainer
+    _mocha.it('should create prototype chains including mixins for instance property objects', () => {
+        const A = _make([
+                _PropertyChainer
             ], {
                 a: {
                     a: 'a'
@@ -186,7 +178,7 @@ describe('PropertyChainer', () => {
                     a: 'a'
                 },
                 _init (...args) {
-                    Reflect.apply(PropertyChainer.prototype._init, this, args);
+                    Reflect.apply(_PropertyChainer.prototype._init, this, args);
                     return this;
                 },
                 _propertyChains: [
@@ -195,7 +187,7 @@ describe('PropertyChainer', () => {
                     'c'
                 ]
             }),
-            B = make([
+            B = _make([
                 A
             ], {
                 a: {
@@ -212,7 +204,7 @@ describe('PropertyChainer', () => {
                     return this;
                 }
             }),
-            C = make([
+            C = _make([
                 B
             ], {
                 a: {
@@ -231,27 +223,27 @@ describe('PropertyChainer', () => {
             }),
             c = C();
 
-        expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
-        expect(Reflect.getPrototypeOf(c.b)).to.equal(B.prototype.b);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.b))).to.equal(A.prototype.b);
-        expect(Reflect.getPrototypeOf(c.c)).to.equal(B.prototype.c);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.c))).to.equal(A.prototype.c);
+        _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(c.b)).to.equal(B.prototype.b);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.b))).to.equal(A.prototype.b);
+        _chai.expect(Reflect.getPrototypeOf(c.c)).to.equal(B.prototype.c);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.c))).to.equal(A.prototype.c);
 
-        expect(c).to.have.deep.property('a.a', 'a');
-        expect(c).to.have.deep.property('a.b', 'b');
-        expect(c).to.have.deep.property('a.c', 'c');
-        expect(c).to.have.deep.property('b.a', 'a');
-        expect(c).to.have.deep.property('b.b', 'b');
-        expect(c).to.have.deep.property('b.c', 'c');
-        expect(c).to.have.deep.property('c.a', 'a');
-        expect(c).to.have.deep.property('c.b', 'b');
-        expect(c).to.have.deep.property('c.c', 'c');
+        _chai.expect(c.a).to.have.property('a', 'a');
+        _chai.expect(c.a).to.have.property('b', 'b');
+        _chai.expect(c.a).to.have.property('c', 'c');
+        _chai.expect(c.b).to.have.property('a', 'a');
+        _chai.expect(c.b).to.have.property('b', 'b');
+        _chai.expect(c.b).to.have.property('c', 'c');
+        _chai.expect(c.c).to.have.property('a', 'a');
+        _chai.expect(c.c).to.have.property('b', 'b');
+        _chai.expect(c.c).to.have.property('c', 'c');
     });
 
-    it('should create prototype chains excluding mixins for instance property objects', () => {
-        const A = make([
-                PropertyChainer
+    _mocha.it('should create prototype chains excluding mixins for instance property objects', () => {
+        const A = _make([
+                _PropertyChainer
             ], {
                 a: {
                     a: 'a'
@@ -263,7 +255,7 @@ describe('PropertyChainer', () => {
                     a: 'a'
                 },
                 _init (...args) {
-                    Reflect.apply(PropertyChainer.prototype._init, this, args);
+                    Reflect.apply(_PropertyChainer.prototype._init, this, args);
                     return this;
                 },
                 _propertyChains: [
@@ -272,7 +264,7 @@ describe('PropertyChainer', () => {
                     'c'
                 ]
             }),
-            B = make([
+            B = _make([
                 A
             ], {
                 a: {
@@ -289,7 +281,7 @@ describe('PropertyChainer', () => {
                     return this;
                 }
             }),
-            C = make([
+            C = _make([
                 B
             ], {
                 a: {
@@ -310,23 +302,23 @@ describe('PropertyChainer', () => {
                 propertyChainsIncludeMixins: false
             });
 
-        expect(Reflect.getPrototypeOf(c.a)).to.equal(Object.prototype);
-        expect(Reflect.getPrototypeOf(c.b)).to.equal(Object.prototype);
-        expect(Reflect.getPrototypeOf(c.c)).to.equal(Object.prototype);
+        _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(Object.prototype);
+        _chai.expect(Reflect.getPrototypeOf(c.b)).to.equal(Object.prototype);
+        _chai.expect(Reflect.getPrototypeOf(c.c)).to.equal(Object.prototype);
 
-        expect(c).not.to.have.deep.property('a.a');
-        expect(c).not.to.have.deep.property('a.b');
-        expect(c).to.have.deep.property('a.c', 'c');
-        expect(c).not.to.have.deep.property('b.a');
-        expect(c).not.to.have.deep.property('b.b');
-        expect(c).to.have.deep.property('b.c', 'c');
-        expect(c).not.to.have.deep.property('c.a');
-        expect(c).not.to.have.deep.property('c.b');
-        expect(c).to.have.deep.property('c.c', 'c');
+        _chai.expect(c.a).not.to.have.property('a');
+        _chai.expect(c.a).not.to.have.property('b');
+        _chai.expect(c.a).to.have.property('c', 'c');
+        _chai.expect(c.b).not.to.have.property('a');
+        _chai.expect(c.b).not.to.have.property('b');
+        _chai.expect(c.b).to.have.property('c', 'c');
+        _chai.expect(c.c).not.to.have.property('a');
+        _chai.expect(c.c).not.to.have.property('b');
+        _chai.expect(c.c).to.have.property('c', 'c');
     });
 
-    it('should create prototype chains for static property objects', () => {
-        const A = make(PropertyChainer, {}, {
+    _mocha.it('should create prototype chains for static property objects', () => {
+        const A = _make(_PropertyChainer, {}, {
                 a: {
                     a: 'a'
                 },
@@ -337,7 +329,7 @@ describe('PropertyChainer', () => {
                     a: 'a'
                 },
                 _init (...args) {
-                    Reflect.apply(PropertyChainer._init, this, args);
+                    Reflect.apply(_PropertyChainer._init, this, args);
                     return this;
                 },
                 _propertyChains: [
@@ -346,7 +338,7 @@ describe('PropertyChainer', () => {
                     'c'
                 ]
             }),
-            B = make(A, {}, {
+            B = _make(A, {}, {
                 a: {
                     b: 'b'
                 },
@@ -361,7 +353,7 @@ describe('PropertyChainer', () => {
                     return this;
                 }
             }),
-            C = make(B, {}, {
+            C = _make(B, {}, {
                 a: {
                     c: 'c'
                 },
@@ -377,26 +369,26 @@ describe('PropertyChainer', () => {
                 }
             });
 
-        expect(Reflect.getPrototypeOf(C.a)).to.equal(B.a);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.a))).to.equal(A.a);
-        expect(Reflect.getPrototypeOf(C.b)).to.equal(B.b);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.b))).to.equal(A.b);
-        expect(Reflect.getPrototypeOf(C.c)).to.equal(B.c);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.c))).to.equal(A.c);
+        _chai.expect(Reflect.getPrototypeOf(C.a)).to.equal(B.a);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.a))).to.equal(A.a);
+        _chai.expect(Reflect.getPrototypeOf(C.b)).to.equal(B.b);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.b))).to.equal(A.b);
+        _chai.expect(Reflect.getPrototypeOf(C.c)).to.equal(B.c);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.c))).to.equal(A.c);
 
-        expect(C).to.have.deep.property('a.a', 'a');
-        expect(C).to.have.deep.property('a.b', 'b');
-        expect(C).to.have.deep.property('a.c', 'c');
-        expect(C).to.have.deep.property('b.a', 'a');
-        expect(C).to.have.deep.property('b.b', 'b');
-        expect(C).to.have.deep.property('b.c', 'c');
-        expect(C).to.have.deep.property('c.a', 'a');
-        expect(C).to.have.deep.property('c.b', 'b');
-        expect(C).to.have.deep.property('c.c', 'c');
+        _chai.expect(C.a).to.have.property('a', 'a');
+        _chai.expect(C.a).to.have.property('b', 'b');
+        _chai.expect(C.a).to.have.property('c', 'c');
+        _chai.expect(C.b).to.have.property('a', 'a');
+        _chai.expect(C.b).to.have.property('b', 'b');
+        _chai.expect(C.b).to.have.property('c', 'c');
+        _chai.expect(C.c).to.have.property('a', 'a');
+        _chai.expect(C.c).to.have.property('b', 'b');
+        _chai.expect(C.c).to.have.property('c', 'c');
     });
 
-    it('should create prototype chains for static property objects with a custom property chains property name', () => {
-        const A = make(PropertyChainer, {}, {
+    _mocha.it('should create prototype chains for static property objects with a custom property chains property name', () => {
+        const A = _make(_PropertyChainer, {}, {
                 a: {
                     a: 'a'
                 },
@@ -412,13 +404,13 @@ describe('PropertyChainer', () => {
                     'c'
                 ],
                 _init () {
-                    Reflect.apply(PropertyChainer._init, this, [{
+                    Reflect.apply(_PropertyChainer._init, this, [{
                         propertyChainsPropertyName: 'somethingElse'
                     }]);
                     return this;
                 }
             }),
-            B = make(A, {}, {
+            B = _make(A, {}, {
                 a: {
                     b: 'b'
                 },
@@ -433,7 +425,7 @@ describe('PropertyChainer', () => {
                     return this;
                 }
             }),
-            C = make(B, {}, {
+            C = _make(B, {}, {
                 a: {
                     c: 'c'
                 },
@@ -449,27 +441,27 @@ describe('PropertyChainer', () => {
                 }
             });
 
-        expect(Reflect.getPrototypeOf(C.a)).to.equal(B.a);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.a))).to.equal(A.a);
-        expect(Reflect.getPrototypeOf(C.b)).to.equal(B.b);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.b))).to.equal(A.b);
-        expect(Reflect.getPrototypeOf(C.c)).to.equal(B.c);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.c))).to.equal(A.c);
+        _chai.expect(Reflect.getPrototypeOf(C.a)).to.equal(B.a);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.a))).to.equal(A.a);
+        _chai.expect(Reflect.getPrototypeOf(C.b)).to.equal(B.b);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.b))).to.equal(A.b);
+        _chai.expect(Reflect.getPrototypeOf(C.c)).to.equal(B.c);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.c))).to.equal(A.c);
 
-        expect(C).to.have.deep.property('a.a', 'a');
-        expect(C).to.have.deep.property('a.b', 'b');
-        expect(C).to.have.deep.property('a.c', 'c');
-        expect(C).to.have.deep.property('b.a', 'a');
-        expect(C).to.have.deep.property('b.b', 'b');
-        expect(C).to.have.deep.property('b.c', 'c');
-        expect(C).to.have.deep.property('c.a', 'a');
-        expect(C).to.have.deep.property('c.b', 'b');
-        expect(C).to.have.deep.property('c.c', 'c');
+        _chai.expect(C.a).to.have.property('a', 'a');
+        _chai.expect(C.a).to.have.property('b', 'b');
+        _chai.expect(C.a).to.have.property('c', 'c');
+        _chai.expect(C.b).to.have.property('a', 'a');
+        _chai.expect(C.b).to.have.property('b', 'b');
+        _chai.expect(C.b).to.have.property('c', 'c');
+        _chai.expect(C.c).to.have.property('a', 'a');
+        _chai.expect(C.c).to.have.property('b', 'b');
+        _chai.expect(C.c).to.have.property('c', 'c');
     });
 
-    it('should create prototype chains including mixins for static property objects', () => {
-        const A = make([
-                PropertyChainer
+    _mocha.it('should create prototype chains including mixins for static property objects', () => {
+        const A = _make([
+                _PropertyChainer
             ], {}, {
                 a: {
                     a: 'a'
@@ -481,7 +473,7 @@ describe('PropertyChainer', () => {
                     a: 'a'
                 },
                 _init (...args) {
-                    Reflect.apply(PropertyChainer._init, this, args);
+                    Reflect.apply(_PropertyChainer._init, this, args);
                     return this;
                 },
                 _propertyChains: [
@@ -490,7 +482,7 @@ describe('PropertyChainer', () => {
                     'c'
                 ]
             }),
-            B = make([
+            B = _make([
                 A
             ], {}, {
                 a: {
@@ -507,7 +499,7 @@ describe('PropertyChainer', () => {
                     return this;
                 }
             }),
-            C = make([
+            C = _make([
                 B
             ], {}, {
                 a: {
@@ -525,27 +517,27 @@ describe('PropertyChainer', () => {
                 }
             });
 
-        expect(Reflect.getPrototypeOf(C.a)).to.equal(B.a);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.a))).to.equal(A.a);
-        expect(Reflect.getPrototypeOf(C.b)).to.equal(B.b);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.b))).to.equal(A.b);
-        expect(Reflect.getPrototypeOf(C.c)).to.equal(B.c);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.c))).to.equal(A.c);
+        _chai.expect(Reflect.getPrototypeOf(C.a)).to.equal(B.a);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.a))).to.equal(A.a);
+        _chai.expect(Reflect.getPrototypeOf(C.b)).to.equal(B.b);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.b))).to.equal(A.b);
+        _chai.expect(Reflect.getPrototypeOf(C.c)).to.equal(B.c);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.c))).to.equal(A.c);
 
-        expect(C).to.have.deep.property('a.a', 'a');
-        expect(C).to.have.deep.property('a.b', 'b');
-        expect(C).to.have.deep.property('a.c', 'c');
-        expect(C).to.have.deep.property('b.a', 'a');
-        expect(C).to.have.deep.property('b.b', 'b');
-        expect(C).to.have.deep.property('b.c', 'c');
-        expect(C).to.have.deep.property('c.a', 'a');
-        expect(C).to.have.deep.property('c.b', 'b');
-        expect(C).to.have.deep.property('c.c', 'c');
+        _chai.expect(C.a).to.have.property('a', 'a');
+        _chai.expect(C.a).to.have.property('b', 'b');
+        _chai.expect(C.a).to.have.property('c', 'c');
+        _chai.expect(C.b).to.have.property('a', 'a');
+        _chai.expect(C.b).to.have.property('b', 'b');
+        _chai.expect(C.b).to.have.property('c', 'c');
+        _chai.expect(C.c).to.have.property('a', 'a');
+        _chai.expect(C.c).to.have.property('b', 'b');
+        _chai.expect(C.c).to.have.property('c', 'c');
     });
 
-    it('should create prototype chains excluding mixins for static property objects', () => {
-        const A = make([
-                PropertyChainer
+    _mocha.it('should create prototype chains excluding mixins for static property objects', () => {
+        const A = _make([
+                _PropertyChainer
             ], {}, {
                 a: {
                     a: 'a'
@@ -557,7 +549,7 @@ describe('PropertyChainer', () => {
                     a: 'a'
                 },
                 _init (...args) {
-                    Reflect.apply(PropertyChainer._init, this, args);
+                    Reflect.apply(_PropertyChainer._init, this, args);
                     return this;
                 },
                 _propertyChains: [
@@ -566,7 +558,7 @@ describe('PropertyChainer', () => {
                     'c'
                 ]
             }),
-            B = make([
+            B = _make([
                 A
             ], {}, {
                 a: {
@@ -583,7 +575,7 @@ describe('PropertyChainer', () => {
                     return this;
                 }
             }),
-            C = make([
+            C = _make([
                 B
             ], {}, {
                 a: {
@@ -603,22 +595,22 @@ describe('PropertyChainer', () => {
                 propertyChainsIncludeMixins: false
             }]);
 
-        expect(Reflect.getPrototypeOf(C.a)).to.equal(Object.prototype);
-        expect(Reflect.getPrototypeOf(C.b)).to.equal(Object.prototype);
-        expect(Reflect.getPrototypeOf(C.c)).to.equal(Object.prototype);
+        _chai.expect(Reflect.getPrototypeOf(C.a)).to.equal(Object.prototype);
+        _chai.expect(Reflect.getPrototypeOf(C.b)).to.equal(Object.prototype);
+        _chai.expect(Reflect.getPrototypeOf(C.c)).to.equal(Object.prototype);
 
-        expect(C).not.to.have.deep.property('a.a');
-        expect(C).not.to.have.deep.property('a.b');
-        expect(C).to.have.deep.property('a.c', 'c');
-        expect(C).not.to.have.deep.property('b.a');
-        expect(C).not.to.have.deep.property('b.b');
-        expect(C).to.have.deep.property('b.c', 'c');
-        expect(C).not.to.have.deep.property('c.a');
-        expect(C).not.to.have.deep.property('c.b');
-        expect(C).to.have.deep.property('c.c', 'c');
+        _chai.expect(C.a).not.to.have.property('a');
+        _chai.expect(C.a).not.to.have.property('b');
+        _chai.expect(C.a).to.have.property('c', 'c');
+        _chai.expect(C.b).not.to.have.property('a');
+        _chai.expect(C.b).not.to.have.property('b');
+        _chai.expect(C.b).to.have.property('c', 'c');
+        _chai.expect(C.c).not.to.have.property('a');
+        _chai.expect(C.c).not.to.have.property('b');
+        _chai.expect(C.c).to.have.property('c', 'c');
     });
 
-    it('should ignore duplicate prototype chains', () => {
+    _mocha.it('should ignore duplicate prototype chains', () => {
         const aa = {
                 a: 'a'
             },
@@ -629,10 +621,10 @@ describe('PropertyChainer', () => {
                 c: 'c'
             },
 
-            A = make(PropertyChainer, {
+            A = _make(_PropertyChainer, {
                 a: aa,
                 _init (...args) {
-                    Reflect.apply(PropertyChainer.prototype._init, this, args);
+                    Reflect.apply(_PropertyChainer.prototype._init, this, args);
                     return this;
                 },
                 _propertyChains: [
@@ -643,7 +635,7 @@ describe('PropertyChainer', () => {
             }, {
                 a: aa,
                 _init (...args) {
-                    Reflect.apply(PropertyChainer._init, this, args);
+                    Reflect.apply(_PropertyChainer._init, this, args);
                     return this;
                 },
                 _propertyChains: [
@@ -652,7 +644,7 @@ describe('PropertyChainer', () => {
                     'a'
                 ]
             }),
-            B = make(A, {
+            B = _make(A, {
                 a: bb,
                 _init (...args) {
                     Reflect.apply(A.prototype._init, this, args);
@@ -665,7 +657,7 @@ describe('PropertyChainer', () => {
                     return this;
                 }
             }),
-            C = make(B, {
+            C = _make(B, {
                 a: cc,
                 _init (...args) {
                     Reflect.apply(B.prototype._init, this, args);
@@ -680,18 +672,18 @@ describe('PropertyChainer', () => {
             }),
             c = C();
 
-        expect(Reflect.getPrototypeOf(C.a)).to.equal(B.a);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.a))).to.equal(A.a);
+        _chai.expect(Reflect.getPrototypeOf(C.a)).to.equal(B.a);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(C.a))).to.equal(A.a);
 
-        expect(C).to.have.deep.property('a.a', 'a');
-        expect(C).to.have.deep.property('a.b', 'b');
-        expect(C).to.have.deep.property('a.c', 'c');
+        _chai.expect(C.a).to.have.property('a', 'a');
+        _chai.expect(C.a).to.have.property('b', 'b');
+        _chai.expect(C.a).to.have.property('c', 'c');
 
-        expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
-        expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
 
-        expect(c).to.have.deep.property('a.a', 'a');
-        expect(c).to.have.deep.property('a.b', 'b');
-        expect(c).to.have.deep.property('a.c', 'c');
+        _chai.expect(c.a).to.have.property('a', 'a');
+        _chai.expect(c.a).to.have.property('b', 'b');
+        _chai.expect(c.a).to.have.property('c', 'c');
     });
 });
