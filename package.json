@@ -33,6 +33,7 @@
         "Duane Sibilly <duane.sibilly@ibigroup.com>"
     ],
     "dependencies": {
+        "isotropic-error": "~0.8.0",
         "isotropic-make": "~0.8.0",
         "isotropic-mixin-prototype-chain": "~0.5.0",
         "isotropic-prototype-chain": "~0.8.0"
