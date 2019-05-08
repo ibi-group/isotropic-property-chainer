@@ -33,10 +33,10 @@
         "Duane Sibilly <duane.sibilly@ibigroup.com>"
     ],
     "dependencies": {
-        "isotropic-error": "~0.8.0",
-        "isotropic-make": "~0.8.0",
-        "isotropic-mixin-prototype-chain": "~0.5.0",
-        "isotropic-prototype-chain": "~0.8.0"
+        "isotropic-error": "~0.9.0",
+        "isotropic-make": "~0.9.0",
+        "isotropic-mixin-prototype-chain": "~0.6.0",
+        "isotropic-prototype-chain": "~0.9.0"
     },
     "description": "A base class that automatically chains the prototypes of inherited object properties.",
     "devDependencies": {
@@ -110,5 +110,5 @@
         "pretest": "npm run lint",
         "test": "cross-env BABEL_ENV=test nyc mocha"
     },
-    "version": "0.8.0"
+    "version": "0.9.0"
 }
