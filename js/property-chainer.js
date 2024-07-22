@@ -22,9 +22,7 @@ export default _make({
                 break;
             }
 
-            if (Reflect.apply(Object.prototype.hasOwnProperty, object, [
-                propertyChainsPropertyName
-            ])) {
+            if (Object.hasOwn(object, propertyChainsPropertyName)) {
                 for (const propertyName of object[propertyChainsPropertyName]) {
                     propertyNameSet.add(propertyName);
                 }
@@ -75,9 +73,7 @@ export default _make({
             }
 
             for (const propertyName of propertyNameSet) {
-                if (Reflect.apply(Object.prototype.hasOwnProperty, object, [
-                    propertyName
-                ])) {
+                if (Object.hasOwn(object, propertyName)) {
                     const propertyValue = object[propertyName];
 
                     switch (typeof propertyValue) {
@@ -148,9 +144,7 @@ export default _make({
                 break;
             }
 
-            if (Reflect.apply(Object.prototype.hasOwnProperty, object, [
-                propertyChainsPropertyName
-            ])) {
+            if (Object.hasOwn(object, propertyChainsPropertyName)) {
                 for (const propertyName of object[propertyChainsPropertyName]) {
                     propertyNameSet.add(propertyName);
                 }
@@ -201,9 +195,7 @@ export default _make({
             }
 
             for (const propertyName of propertyNameSet) {
-                if (Reflect.apply(Object.prototype.hasOwnProperty, object, [
-                    propertyName
-                ])) {
+                if (Object.hasOwn(object, propertyName)) {
                     const propertyValue = object[propertyName];
 
                     switch (typeof propertyValue) {
