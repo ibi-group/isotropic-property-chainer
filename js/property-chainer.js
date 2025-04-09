@@ -1,9 +1,6 @@
-import {
-    mixinPrototypeChainFromInstanceObject as _mixinPrototypeChainFromInstanceObject,
-    mixinPrototypeChainFromStaticObject as _mixinPrototypeChainFromStaticObject
-} from 'isotropic-mixin-prototype-chain';
 import _Error from 'isotropic-error';
 import _make from 'isotropic-make';
+import _mixinPrototypeChain from 'isotropic-mixin-prototype-chain';
 import _prototypeChain from 'isotropic-prototype-chain';
 
 export default _make({
@@ -15,7 +12,7 @@ export default _make({
 
         for (
             const object of propertyChainsIncludeMixins ?
-                _mixinPrototypeChainFromInstanceObject(this) :
+                _mixinPrototypeChain.fromInstanceObject(this) :
                 _prototypeChain(this)
         ) {
             if (object === Object.prototype) {
@@ -137,7 +134,7 @@ export default _make({
 
         for (
             const object of propertyChainsIncludeMixins ?
-                _mixinPrototypeChainFromStaticObject(this) :
+                _mixinPrototypeChain.fromStaticObject(this) :
                 _prototypeChain(this)
         ) {
             if (object === Object) {
