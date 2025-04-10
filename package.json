@@ -9,6 +9,7 @@
     },
     "description": "A base class that automatically chains the prototypes of inherited object properties",
     "devDependencies": {
+        "eslint": "~9.8.0",
         "isotropic-dev-dependencies": "~0.3.0"
     },
     "engines": {
