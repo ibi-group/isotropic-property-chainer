@@ -28,7 +28,7 @@ import _make from 'isotropic-make';
 import _PropertyChainer from 'isotropic-property-chainer';
 
 // Create a base class with object properties to be chained
-const _BaseComponent = _make(_PropertyChainer, {
+const _BaseComponent = _make('BaseComponent', _PropertyChainer, {
         // Define default configuration as an object property
         config: {
             animationSpeed: 'normal',
@@ -49,7 +49,7 @@ const _BaseComponent = _make(_PropertyChainer, {
         ]
     }),
     // Create a derived class
-    _EnhancedComponent = _make(_BaseComponent, {
+    _EnhancedComponent = _make('EnhancedComponent', _BaseComponent, {
         // Only define the config properties we want to override
         config: {
             debugMode: true,
@@ -101,7 +101,7 @@ PropertyChainer({
 #### Parameters
 
 - `propertyChainsIncludeMixins` (Boolean, optional): Whether to include mixins when building property chains. Default: `true`
-- `propertyChainsPropertyName` (String, optional): The name of the property that contains the array of property names to chain. Default: `'_propertyChains'`
+- `propertyChainsPropertyName` (String, optional): The name of the property that contains the array (or any iterable) of property names to chain. Default: `'_propertyChains'`
 
 ## Examples
 
@@ -112,7 +112,7 @@ import _make from 'isotropic-make';
 import _PropertyChainer from 'isotropic-property-chainer';
 
 // Base class with default settings
-const _UiComponent = _make(_PropertyChainer, {
+const _UiComponent = _make('UiComponent', _PropertyChainer, {
         render () {
             console.log(`Rendering with settings: ${JSON.stringify(this.settings)}`);
         },
@@ -134,7 +134,7 @@ const _UiComponent = _make(_PropertyChainer, {
     }),
 
     // Button class extends base component
-    _Button = _make(_UiComponent, {
+    _Button = _make('Button', _UiComponent, {
         onClick () {
             console.log('Button clicked');
         },
@@ -173,7 +173,7 @@ const _UiComponent = _make(_PropertyChainer, {
 import _make from 'isotropic-make';
 import _PropertyChainer from 'isotropic-property-chainer';
 
-const _Database = _make(_PropertyChainer, {
+const _Database = _make('Database', _PropertyChainer, {
         connectionConfig: {
             host: 'localhost',
             port: 5432,
@@ -194,7 +194,7 @@ const _Database = _make(_PropertyChainer, {
             'queryDefaults'
         ],
     }),
-    _ProductionDb = _make(_Database, {
+    _ProductionDb = _make('ProductionDb', _Database, {
         connectionConfig: {
             host: 'production.example.com',
             ssl: true
@@ -232,7 +232,7 @@ import _make from 'isotropic-make';
 import _PropertyChainer from 'isotropic-property-chainer';
 
 // Create a logging mixin
-const _LoggingMixin = _make({
+const _LoggingMixin = _make('LoggingMixin', {
         log (message, level = this.logConfig.level) {
             if (this.logConfig.console) {
                 console.log(`[${level.toUpperCase()}] ${message}`);
@@ -246,7 +246,7 @@ const _LoggingMixin = _make({
         _propertyChains: ['logConfig']
     }),
     // Create a network mixin
-    _NetworkMixin = _make({
+    _NetworkMixin = _make('NetworkMixin', {
         async fetch (url) {
             // Implementation...
         },
@@ -263,7 +263,7 @@ const _LoggingMixin = _make({
         ]
     }),
     // Base service class
-    _Service = _make(_PropertyChainer, {
+    _Service = _make('Service', _PropertyChainer, {
         serviceConfig: {
             enabled: true,
             name: 'BaseService'
@@ -277,7 +277,7 @@ const _LoggingMixin = _make({
         ]
     }),
     // User service with mixins
-    _UserService = _make(_Service, [
+    _UserService = _make('UserService', _Service, [
         _LoggingMixin,
         _NetworkMixin
     ], {
@@ -323,7 +323,7 @@ import _make from 'isotropic-make';
 import _PropertyChainer from 'isotropic-property-chainer';
 
 // Base class with static properties to chain
-const _ApiClient = _make(_PropertyChainer, {
+const _ApiClient = _make('ApiClient', _PropertyChainer, {
         _init (...args) {
             Reflect.apply(_PropertyChainer.prototype._init, this, args);
 
@@ -345,7 +345,7 @@ const _ApiClient = _make(_PropertyChainer, {
         ]
     }),
     // Derived class with static property overrides
-    _CustomerApi = _make(_ApiClient, {
+    _CustomerApi = _make('CustomerApi', _ApiClient, {
         _init (...args) {
             Reflect.apply(_ApiClient.prototype._init, this, args);
 
@@ -379,7 +379,7 @@ import _make from 'isotropic-make';
 import _PropertyChainer from 'isotropic-property-chainer';
 
 // Base class with custom property chains property name
-const _Component = _make(_PropertyChainer, {
+const _Component = _make('Component', _PropertyChainer, {
         // Using a custom name for _propertyChains
         chainedProps: [
             'config'
@@ -398,7 +398,7 @@ const _Component = _make(_PropertyChainer, {
     }),
 
     // Exclude mixins from property chains
-    _AdvancedComponent = _make(_Component, [
+    _AdvancedComponent = _make('AdvancedComponent', _Component, [
         _SomeMixin
     ], {
         chainedProps: [
@@ -452,7 +452,7 @@ const _MixinA = _make({
         ]
     }),
 
-    _Component = _make(_PropertyChainer, [
+    _Component = _make('Component', _PropertyChainer, [
         _MixinA, // Order matters - last defined mixin overwrites previous
         _MixinB
     ], {

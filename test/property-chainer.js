@@ -1,27 +1,25 @@
 import _chai from 'isotropic-dev-dependencies/lib/chai.js';
 import _Error from 'isotropic-error';
 import _make from 'isotropic-make';
-import _mocha from 'isotropic-dev-dependencies/lib/mocha.js';
-import _PropertyChainer from '../js/property-chainer.js';
+import _PropertyChainer from '../lib/property-chainer.js';
+import _test from 'node:test';
 
-_mocha.describe('PropertyChainer', () => {
-    _mocha.it('should construct property chainer objects', () => {
+_test.describe('PropertyChainer', () => {
+    _test.it('should construct property chainer objects', () => {
         _chai.expect(_PropertyChainer).to.be.a('function');
+        _chai.expect(_PropertyChainer).to.have.property('name').that.equals('PropertyChainer');
 
         const propertyChainer = new _PropertyChainer();
 
+        _chai.expect(propertyChainer).to.be.a('PropertyChainer');
         _chai.expect(propertyChainer).to.be.an.instanceOf(_PropertyChainer);
     });
 
-    _mocha.it('should be a property chainer object factory', () => {
-        _chai.expect(_PropertyChainer).to.be.a('function');
-
-        const propertyChainer = _PropertyChainer();
-
-        _chai.expect(propertyChainer).to.be.an.instanceOf(_PropertyChainer);
+    _test.it('should be a property chainer object factory', () => {
+        _chai.expect(_PropertyChainer()).to.be.an.instanceOf(_PropertyChainer);
     });
 
-    _mocha.it('should create prototype chains for instance property objects', () => {
+    _test.it('should create prototype chains for instance property objects', () => {
         const A = _make(_PropertyChainer, {
                 a: {
                     a: 'a'
@@ -74,6 +72,10 @@ _mocha.describe('PropertyChainer', () => {
             }),
             c = C();
 
+        _chai.expect(A).to.be.a('function');
+        _chai.expect(B).to.be.a('function');
+        _chai.expect(C).to.be.a('function');
+
         _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
         _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
         _chai.expect(Reflect.getPrototypeOf(c.b)).to.equal(B.prototype.b);
@@ -92,7 +94,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(c.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should ignore invalid or missing values for instance property objects', () => {
+    _test.it('should ignore invalid or missing values for instance property objects', () => {
         const A = _make(_PropertyChainer, {
                 a: {
                     a: 'a'
@@ -140,6 +142,10 @@ _mocha.describe('PropertyChainer', () => {
             }),
             c = C();
 
+        _chai.expect(A).to.be.a('function');
+        _chai.expect(B).to.be.a('function');
+        _chai.expect(C).to.be.a('function');
+
         _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
         _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
         _chai.expect(Reflect.getPrototypeOf(c.b)).to.equal(A.prototype.b);
@@ -156,7 +162,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(c.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should throw an error when a prototype chain can not be created for instance property objects', () => {
+    _test.it('should throw an error when a prototype chain can not be created for instance property objects', () => {
         const A = _make(_PropertyChainer, {
                 a: {
                     a: 'a'
@@ -184,7 +190,7 @@ _mocha.describe('PropertyChainer', () => {
         }).to.throw(_Error);
     });
 
-    _mocha.it('should create prototype chains for instance property objects with a custom property chains property name', () => {
+    _test.it('should create prototype chains for instance property objects with a custom property chains property name', () => {
         const A = _make(_PropertyChainer, {
                 a: {
                     a: 'a'
@@ -239,6 +245,10 @@ _mocha.describe('PropertyChainer', () => {
             }),
             c = C();
 
+        _chai.expect(A).to.be.a('function');
+        _chai.expect(B).to.be.a('function');
+        _chai.expect(C).to.be.a('function');
+
         _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
         _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
         _chai.expect(Reflect.getPrototypeOf(c.b)).to.equal(B.prototype.b);
@@ -257,7 +267,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(c.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should create prototype chains including mixins for instance property objects', () => {
+    _test.it('should create prototype chains including mixins for instance property objects', () => {
         const A = _make([
                 _PropertyChainer
             ], {
@@ -316,6 +326,10 @@ _mocha.describe('PropertyChainer', () => {
             }),
             c = C();
 
+        _chai.expect(A).to.be.a('function');
+        _chai.expect(B).to.be.a('function');
+        _chai.expect(C).to.be.a('function');
+
         _chai.expect({
             ...Reflect.getPrototypeOf(c.a)
         }).to.deep.equal({
@@ -358,7 +372,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(c.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should create prototype chains excluding mixins for instance property objects', () => {
+    _test.it('should create prototype chains excluding mixins for instance property objects', () => {
         const A = _make([
                 _PropertyChainer
             ], {
@@ -419,6 +433,10 @@ _mocha.describe('PropertyChainer', () => {
                 propertyChainsIncludeMixins: false
             });
 
+        _chai.expect(A).to.be.a('function');
+        _chai.expect(B).to.be.a('function');
+        _chai.expect(C).to.be.a('function');
+
         _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(Object.prototype);
         _chai.expect(Reflect.getPrototypeOf(c.b)).to.equal(Object.prototype);
         _chai.expect(Reflect.getPrototypeOf(c.c)).to.equal(Object.prototype);
@@ -434,7 +452,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(c.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should create prototype chains for static property objects', () => {
+    _test.it('should create prototype chains for static property objects', () => {
         const A = _make(_PropertyChainer, {}, {
                 a: {
                     a: 'a'
@@ -504,7 +522,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(C.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should ignore invalid or missing values for static property objects', () => {
+    _test.it('should ignore invalid or missing values for static property objects', () => {
         const A = _make(_PropertyChainer, {}, {
                 a: {
                     a: 'a'
@@ -567,7 +585,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(C.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should throw an error when a prototype chain can not be created for static property objects', () => {
+    _test.it('should throw an error when a prototype chain can not be created for static property objects', () => {
         const A = _make(_PropertyChainer, {}, {
                 a: {
                     a: 'a'
@@ -594,7 +612,7 @@ _mocha.describe('PropertyChainer', () => {
             });
     });
 
-    _mocha.it('should create prototype chains for static property objects with a custom property chains property name', () => {
+    _test.it('should create prototype chains for static property objects with a custom property chains property name', () => {
         const A = _make(_PropertyChainer, {}, {
                 a: {
                     a: 'a'
@@ -666,7 +684,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(C.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should create prototype chains including mixins for static property objects', () => {
+    _test.it('should create prototype chains including mixins for static property objects', () => {
         const A = _make([
                 _PropertyChainer
             ], {}, {
@@ -766,7 +784,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(C.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should create prototype chains excluding mixins for static property objects', () => {
+    _test.it('should create prototype chains excluding mixins for static property objects', () => {
         const A = _make([
                 _PropertyChainer
             ], {}, {
@@ -841,7 +859,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(C.c).to.have.property('c', 'c');
     });
 
-    _mocha.it('should ignore duplicate prototype chains', () => {
+    _test.it('should ignore duplicate prototype chains', () => {
         const aa = {
                 a: 'a'
             },
@@ -918,7 +936,7 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(c.a).to.have.property('c', 'c');
     });
 
-    _mocha.it('should chain only the last instance of duplicate property objects', () => {
+    _test.it('should chain only the last instance of duplicate property objects', () => {
         const A = _make(_PropertyChainer, {
                 a: {
                     a: 'a'
@@ -1167,5 +1185,80 @@ _mocha.describe('PropertyChainer', () => {
         _chai.expect(d.c).to.have.property('b', 'b');
         _chai.expect(d.c).to.have.property('c', 'c');
         _chai.expect(d.c).to.have.property('d', 'd');
+    });
+
+    _test.it('should accept _propertyChains as a Set', () => {
+        const A = _make(_PropertyChainer, {
+                a: {
+                    a: 'a'
+                },
+                b: {
+                    a: 'a'
+                },
+                c: {
+                    a: 'a'
+                },
+                _init (...args) {
+                    Reflect.apply(_PropertyChainer.prototype._init, this, args);
+                    return this;
+                },
+                _propertyChains: new Set([
+                    'a',
+                    'b',
+                    'c'
+                ])
+            }),
+            B = _make(A, {
+                a: {
+                    b: 'b'
+                },
+                b: {
+                    b: 'b'
+                },
+                c: {
+                    b: 'b'
+                },
+                _init (...args) {
+                    Reflect.apply(A.prototype._init, this, args);
+                    return this;
+                }
+            }),
+            C = _make(B, {
+                a: {
+                    c: 'c'
+                },
+                b: {
+                    c: 'c'
+                },
+                c: {
+                    c: 'c'
+                },
+                _init (...args) {
+                    Reflect.apply(B.prototype._init, this, args);
+                    return this;
+                }
+            }),
+            c = C();
+
+        _chai.expect(A).to.be.a('function');
+        _chai.expect(B).to.be.a('function');
+        _chai.expect(C).to.be.a('function');
+
+        _chai.expect(Reflect.getPrototypeOf(c.a)).to.equal(B.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.a))).to.equal(A.prototype.a);
+        _chai.expect(Reflect.getPrototypeOf(c.b)).to.equal(B.prototype.b);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.b))).to.equal(A.prototype.b);
+        _chai.expect(Reflect.getPrototypeOf(c.c)).to.equal(B.prototype.c);
+        _chai.expect(Reflect.getPrototypeOf(Reflect.getPrototypeOf(c.c))).to.equal(A.prototype.c);
+
+        _chai.expect(c.a).to.have.property('a', 'a');
+        _chai.expect(c.a).to.have.property('b', 'b');
+        _chai.expect(c.a).to.have.property('c', 'c');
+        _chai.expect(c.b).to.have.property('a', 'a');
+        _chai.expect(c.b).to.have.property('b', 'b');
+        _chai.expect(c.b).to.have.property('c', 'c');
+        _chai.expect(c.c).to.have.property('a', 'a');
+        _chai.expect(c.c).to.have.property('b', 'b');
+        _chai.expect(c.c).to.have.property('c', 'c');
     });
 });
